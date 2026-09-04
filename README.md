@@ -17,13 +17,24 @@ For each pattern, I try to understand:
 - When should we use it?
 - What are its advantages and disadvantages?
 
+## ⚠️ About This Repository
+
+This is a learning and practice repository created to understand
+and implement the **Gang of Four (GoF) Design Patterns** in Java.
+
+The examples are primarily educational and are **not intended to
+represent production-ready applications**.
+
+The project will be continuously updated as I learn and implement
+more Design Patterns.
+
 ---
 
-# 📚 Design Patterns
+## 📚 Design Patterns
 
 The patterns are organized into three main categories:
 
-## 1. Creational Patterns
+### 1. Creational Patterns
 
 Patterns concerned with object creation.
 
@@ -39,7 +50,7 @@ The Creational Patterns section contains practical Java examples demonstrating d
 
 ---
 
-## 2. Structural Patterns
+### 2. Structural Patterns
 
 Patterns concerned with how classes and objects are composed to form larger structures.
 
@@ -53,7 +64,7 @@ Patterns concerned with how classes and objects are composed to form larger stru
 
 ---
 
-## 3. Behavioral Patterns
+### 3. Behavioral Patterns
 
 Patterns concerned with communication and responsibility between objects.
 
@@ -71,7 +82,7 @@ Patterns concerned with communication and responsibility between objects.
 
 ---
 
-# 🛠️ Technologies
+## 🛠️ Technologies
 
 - Java
 - Object-Oriented Programming (OOP)
@@ -80,7 +91,7 @@ Patterns concerned with communication and responsibility between objects.
 
 ---
 
-# 📁 Project Structure
+## 📁 Project Structure
 
 The project is organized according to the three categories of Design Patterns:
 
