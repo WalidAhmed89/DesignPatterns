@@ -1,4 +1,4 @@
-package Structural.Proxy;
+package Structural.Proxy.SMSService;
 
 import java.util.Hashtable;
 import java.util.Map;
