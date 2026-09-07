@@ -54,13 +54,13 @@ The Creational Patterns section contains practical Java examples demonstrating d
 
 Patterns concerned with how classes and objects are composed to form larger structures.
 
-- [ ] Adapter
-- [ ] Bridge
-- [ ] Composite
-- [ ] Decorator
-- [ ] Facade
-- [ ] Flyweight
-- [ ] Proxy
+- [x] Adapter
+- [x] Bridge
+- [x] Composite
+- [x] Decorator
+- [x] Facade
+- [x] Flyweight
+- [x] Proxy
 
 ---
 
