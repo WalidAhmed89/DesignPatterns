@@ -1,4 +1,4 @@
-package Structural.Facade;
+package Structural.Facade.ShoppingOrder;
 
 public class Program {
     static void main(String[] args) {

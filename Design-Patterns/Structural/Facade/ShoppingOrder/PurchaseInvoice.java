@@ -1,4 +1,4 @@
-package Structural.Facade;
+package Structural.Facade.ShoppingOrder;
 
 import java.util.List;
 
@@ -7,7 +7,7 @@ public class PurchaseInvoice {
     double totalAmount = 0;
     double netTotal = 0;
 
-    public PurchaseInvoice createInvoce(ShoppingBasket basket,String customerInfo){
+    public PurchaseInvoice createInvoce(ShoppingBasket basket, String customerInfo){
         PurchaseInvoice invoice = new PurchaseInvoice();
         List<BasketItem> items = basket.getItems();
         for (BasketItem item : items){

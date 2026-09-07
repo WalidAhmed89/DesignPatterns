@@ -1,4 +1,4 @@
-package Structural.Facade;
+package Structural.Facade.ShoppingOrder;
 
 public class SMSNotification {
     public String sendSMS(String toUser,String massage){

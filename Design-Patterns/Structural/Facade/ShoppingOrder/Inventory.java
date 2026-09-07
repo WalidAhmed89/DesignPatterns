@@ -1,4 +1,4 @@
-package Structural.Facade;
+package Structural.Facade.ShoppingOrder;
 
 public class Inventory {
     public boolean checkItemQuantity(String itemID,double quantity){

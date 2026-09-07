@@ -1,7 +1,7 @@
-package Structural.Facade;
+package Structural.Facade.ShoppingOrder;
 
 public class PurchaseOrder {
-     public boolean createOrder(ShoppingBasket basket,String customerInfo){
+     public void createOrder(ShoppingBasket basket, String customerInfo){
          //Check Stock
          boolean isAvailable = true;
          Inventory inventory = new Inventory();
@@ -26,9 +26,7 @@ public class PurchaseOrder {
              //Send SMS
              SMSNotification sms = new SMSNotification();
              sms.sendSMS("Frosted","invoice Created");
-             return true;
          }
 
-         return false;
      }
 }
