@@ -1,4 +1,7 @@
-package Behavioral.ChainOfResponsibility.JobApplication;
+package Behavioral.ChainOfResponsibility.JobApplication.SecondScenario;
+
+import Behavioral.ChainOfResponsibility.JobApplication.BaseHandler;
+import Behavioral.ChainOfResponsibility.JobApplication.JobApplication;
 
 public class TechHandler extends BaseHandler {
     @Override
