@@ -1,5 +1,8 @@
 package Behavioral.ChainOfResponsibility.JobApplication;
 
+import Behavioral.ChainOfResponsibility.JobApplication.SecondScenario.HRHandler;
+import Behavioral.ChainOfResponsibility.JobApplication.SecondScenario.TechHandler;
+
 public class Program {
     public static void main(String[] args) {
         JobApplication jobApplication = new JobApplication("Walid Ahmed","Backend Engineer","9543532",new StringBuilder());

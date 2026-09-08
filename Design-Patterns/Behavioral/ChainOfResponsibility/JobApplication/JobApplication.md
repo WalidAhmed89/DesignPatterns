@@ -2,187 +2,128 @@
 
 ## Overview
 
-This example demonstrates the **Chain of Responsibility Design Pattern** using a job application review workflow.
+This example demonstrates the **Chain of Responsibility Design Pattern** using a job application review system.
 
-A `JobApplication` is passed through a chain of handlers. Each handler checks whether it is responsible for the application's job title:
+The project contains **two different scenarios**, implemented in separate packages:
 
-- If the handler can process the request, it handles it and stops the chain.
-- If it cannot process the request, it forwards the request to the next handler.
+```text
+JobApplication/
+├── FirstScenario/
+└── SecondScenario/
+```
+
+Both scenarios use the same core idea: a request is passed through a chain of handlers. However, they demonstrate two different behaviors:
+
+- **FirstScenario** → the request passes through **all handlers**.
+- **SecondScenario** → the request stops when the **first responsible handler** processes it.
 
 ---
 
-## Problem
+# What Problem Does Chain of Responsibility Solve?
 
-Imagine a recruitment system where different departments are responsible for different job applications.
+Imagine a recruitment system where different departments may process a job application.
+
+For example:
 
 - **HR** handles `Product Management` and `Sales`.
-- **Tech** handles `Backend Engineer`, `Software Engineer`, and `AI Engineer`.
+- **Tech** handles `AI Engineer` and `Backend Engineer`.
 
-Without Chain of Responsibility, the client might contain a large `if/else` or `switch` statement to decide which department should process the application.
+Without this pattern, the client could become responsible for deciding which department should process the application using large `if/else` or `switch` statements.
 
-This creates unnecessary coupling between the client and the concrete handlers.
-
----
-
-## Solution
-
-Chain of Responsibility creates a chain of handlers.
-
-Each handler:
-
-1. Checks whether it can handle the request.
-2. Handles the request and stops the chain if it can.
-3. Otherwise, forwards the request to the next handler.
+Chain of Responsibility moves this responsibility into a chain of independent handlers.
 
 ```text
 Client
   |
   v
-HRHandler
+First Handler
   |
-  | cannot handle
   v
-TechHandler
+Next Handler
   |
-  | can handle
   v
-Handle Request
-  |
- STOP
+Next Handler
 ```
 
----
-
-## Pattern Structure
-
-### Request
-
-`JobApplication`
-
-Contains the data that travels through the chain.
-
-### Handler
-
-`BaseHandler`
-
-Defines the common structure for all handlers and stores a reference to the next handler.
-
-### Concrete Handlers
-
-- `HRHandler`
-- `TechHandler`
-
-Each handler contains its own responsibility and decides whether it can handle the request.
-
-### Client
-
-`Program`
-
-Builds the chain and sends the request to the first handler.
+The client only needs to start the chain.
 
 ---
 
-## Class Structure
+# Common Structure
+
+Both scenarios share the same fundamental structure.
 
 ```text
-                 BaseHandler
-                     |
-          +----------+----------+
-          |                     |
-          v                     v
-      HRHandler            TechHandler
-          |                     |
-          +------ next ---------+
+                    BaseHandler
+                         |
+              +----------+----------+
+              |                     |
+              v                     v
+          HRHandler             TechHandler
+              |                     |
+              +------ next ---------+
 
-JobApplication
-      ^
-      |
-   Request
+                       ^
+                       |
+                 JobApplication
+                    Request
 
-Program
-  |
-  +--> HRHandler
+                       ^
+                       |
+                    Program
+                    Client
 ```
 
+| Component | Role |
+|---|---|
+| `JobApplication` | Request |
+| `BaseHandler` | Handler |
+| `HRHandler` | Concrete Handler |
+| `TechHandler` | Concrete Handler |
+| `Program` | Client |
+| `nextHandler` | Link to the next handler |
+
 ---
+
+# FirstScenario — All Handlers Process the Request
+
+## Concept
+
+In `FirstScenario`, the request passes through **all handlers in the chain**.
+
+Each handler can inspect and modify the request. After processing, it passes the request to the next handler.
+
+```text
+Request
+   |
+   v
+HRHandler
+   |
+   | Process / Modify
+   v
+TechHandler
+   |
+   | Process / Modify
+   v
+Next Handler
+   |
+   v
+Final Response
+```
+
+The important rule is:
+
+> **Processing the request does not stop the chain.**
 
 ## Example
 
-The application contains:
+For a job application, HR checks whether it is responsible for `Product Management` or `Sales`. Tech checks whether it is responsible for `AI Engineer` or `Backend Engineer`.
 
-```java
-JobApplication jobApplication =
-    new JobApplication(
-        "Walid Ahmed",
-        "Backend Engineer",
-        "9543532",
-        new StringBuilder()
-    );
-```
+Even when a handler processes the request, it still forwards it to the next handler.
 
-The chain is created as:
+This makes the chain behave like a **processing pipeline**, where multiple stages can contribute to the final result.
 
-```java
-HRHandler hrHandler = new HRHandler();
-TechHandler techHandler = new TechHandler();
-
-hrHandler.setNext(techHandler);
-```
-
-The client starts the chain:
-
-```java
-hrHandler.handelRequest(jobApplication);
-```
-
----
-
-## How It Works
-
-The job title is:
-
-```text
-Backend Engineer
-```
-
-### Step 1 — HR Handler
-
-`HRHandler` checks whether the job title is:
-
-```text
-Product Management
-Sales
-```
-
-The answer is **No**, so HR forwards the request to the next handler.
-
-```text
-HRHandler → TechHandler
-```
-
-### Step 2 — Tech Handler
-
-`TechHandler` checks whether the job title is:
-
-```text
-Backend Engineer
-Software Engineer
-AI Engineer
-```
-
-The answer is **Yes**, so Tech handles the request.
-
-```text
-Managed by Tech
-```
-
-Then it executes `return`, which stops the chain.
-
----
-
-## Request Flow
-
-For a `Backend Engineer` application:
+### Flow
 
 ```text
 JobApplication
@@ -190,11 +131,100 @@ JobApplication
       v
   HRHandler
       |
-      | Not responsible
+      | Process / Check
       v
  TechHandler
       |
-      | Responsible
+      | Process / Check
+      v
+ Next Handler
+      |
+      v
+Final Response
+```
+
+---
+
+# SecondScenario — First Responsible Handler Processes the Request
+
+## Concept
+
+In `SecondScenario`, the request passes through the chain until a handler is able to process it.
+
+Once a handler successfully handles the request, the chain stops.
+
+```text
+Request
+   |
+   v
+HRHandler
+   |
+   | Cannot handle
+   v
+TechHandler
+   |
+   | Can handle
+   v
+Handle Request
+   |
+  STOP
+```
+
+The important rule is:
+
+> **A handler either handles the request or forwards it to the next handler.**
+
+## Example
+
+Suppose the job title is:
+
+```text
+Backend Engineer
+```
+
+### Step 1 — HR Handler
+
+HR checks:
+
+```text
+Product Management
+Sales
+```
+
+The job does not match, so HR forwards the request.
+
+```text
+HRHandler → TechHandler
+```
+
+### Step 2 — Tech Handler
+
+Tech checks:
+
+```text
+AI Engineer
+Backend Engineer
+```
+
+The job matches, so Tech handles the request and stops the chain.
+
+```java
+return;
+```
+
+### Flow
+
+```text
+JobApplication
+      |
+      v
+  HRHandler
+      |
+      | Cannot handle
+      v
+ TechHandler
+      |
+      | Can handle
       v
  Managed by Tech
       |
@@ -203,89 +233,184 @@ JobApplication
 
 ---
 
-## Why `return` Is Important
+# The Key Difference
 
-When a handler successfully processes the request, the chain should stop.
+The main difference is what happens **after a handler processes the request**.
 
-```java
-if (request.getJobTitle().equals("Backend Engineer")) {
-    request.getComments().append("Managed by Tech\n");
-    return;
-}
+### FirstScenario
+
+```text
+Can process?
+     |
+    YES
+     |
+   Process
+     |
+     v
+Next Handler
 ```
 
-The `return` prevents the request from continuing to another handler after it has already been handled.
+Processing does **not** stop the chain.
 
-The core rule is:
+### SecondScenario
 
-> **Handle the request OR pass it to the next handler.**
+```text
+Can process?
+     |
+    YES
+     |
+   Process
+     |
+    STOP
+```
+
+Processing **stops** the chain.
 
 ---
 
-## Advantages
+# Side-by-Side Comparison
 
-- Reduces coupling between the client and concrete handlers.
-- Each handler contains its own responsibility.
-- New handlers can be added without changing the client.
-- The order of handlers can be changed easily.
-- A request can stop as soon as an appropriate handler processes it.
+| Feature | FirstScenario | SecondScenario |
+|---|---|---|
+| Request passes through all handlers | Yes | No |
+| Handler can modify request | Yes | Yes |
+| Handler forwards after processing | Yes | No |
+| Chain stops after successful handling | No | Yes |
+| Typical use | Processing pipeline | Responsibility / escalation |
+| Core behavior | Process → Forward | Handle → Stop |
 
 ---
 
-## When to Use
+# Why Have Two Scenarios?
 
-Use Chain of Responsibility when:
+The two scenarios show that Chain of Responsibility can support different processing requirements.
 
-- Multiple objects may be able to handle a request.
-- The appropriate handler is not known by the client.
-- You want to avoid large `if/else` or `switch` blocks.
-- You want handlers to be independently configurable.
-- The request should move through a sequence of possible handlers.
+### FirstScenario — Processing Pipeline
+
+```text
+Request
+   ↓
+Validation
+   ↓
+Authentication
+   ↓
+Logging
+   ↓
+Processing
+   ↓
+Response
+```
+
+Every stage can contribute to the request.
+
+### SecondScenario — Responsibility Chain
+
+```text
+Request
+   ↓
+Handler A
+   ↓
+Handler B
+   ↓
+Handler C
+   ↓
+One handler handles it
+   ↓
+STOP
+```
+
+The first handler capable of handling the request takes responsibility for it.
+
+---
+
+# When to Use Chain of Responsibility
+
+Use this pattern when:
+
+- Multiple objects may be involved in processing a request.
+- The sender should not be tightly coupled to the receiver.
+- Processing logic can be divided into independent handlers.
+- The order of handlers can be configured.
+- You want to add or remove handlers without heavily modifying the client.
 
 Common examples include:
 
 - Approval workflows
-- Authentication and authorization pipelines
+- Authentication and authorization
 - Validation pipelines
-- Customer support escalation
 - HTTP middleware
-- Request processing pipelines
+- Logging pipelines
+- Customer support escalation
+- Event processing
+- Request processing systems
 
 ---
 
-## Key Takeaways
+# Advantages
 
-| Concept | Implementation |
-|---|---|
-| Request | `JobApplication` |
-| Handler | `BaseHandler` |
-| Concrete Handlers | `HRHandler`, `TechHandler` |
-| Next Handler | `nextHandler` |
-| Client | `Program` |
-| Handle | Process the request |
-| Forward | Call `nextHandler.handelRequest()` |
-| Stop | `return` |
+- **Loose Coupling** — The client does not need to know which concrete handler processes the request.
+- **Single Responsibility** — Each handler can focus on one responsibility.
+- **Flexible Chain** — Handlers can be added, removed, or reordered.
+- **Extensibility** — New handlers can be introduced without changing the client.
+- **Reusable Processing** — The same handler can be used in different chains.
 
-The main idea:
+---
+
+# Project Structure
 
 ```text
-Can I handle this request?
-        |
-   +----+----+
-   |         |
-  YES        NO
-   |         |
- Handle      Next Handler
-   |
- STOP
+Behavioral/
+└── ChainOfResponsibility/
+    └── JobApplication/
+        ├── BaseHandler.java
+        ├── JobApplication.java
+        │
+        ├── FirstScenario/
+        │   ├── HRHandler.java
+        │   ├── TechHandler.java
+        │   └── Program.java
+        │
+        └── SecondScenario/
+            ├── HRHandler.java
+            ├── TechHandler.java
+            └── Program.java
 ```
+
+The shared classes provide the common foundation, while the two packages demonstrate different chain behaviors.
 
 ---
 
-## Learning Goal
+# Key Takeaways
 
-This example is designed to build a practical understanding of the **Chain of Responsibility** pattern rather than memorizing its definition.
+### FirstScenario
 
-The important concept is recognizing the design problem:
+> **All handlers get the opportunity to process the request.**
 
-> **Several handlers may be responsible for a request, and the request should be passed through the chain until an appropriate handler handles it.**
+```text
+Handler → Process → Next
+```
+
+### SecondScenario
+
+> **The first handler capable of processing the request handles it and stops the chain.**
+
+```text
+Handler → Handle → STOP
+```
+
+### General Idea
+
+> **Pass a request along a chain of handlers, allowing each handler to decide how it should process or forward the request according to the application's requirements.**
+
+---
+
+# Learning Goal
+
+This example was implemented to understand the **Chain of Responsibility Pattern through practice**, rather than memorizing its definition.
+
+The two scenarios demonstrate that the same structural pattern can support different processing behaviors:
+
+1. **FirstScenario** — all handlers participate in processing.
+2. **SecondScenario** — processing stops at the first responsible handler.
+
+Understanding this distinction makes it easier to recognize when Chain of Responsibility is appropriate in real-world software systems.
