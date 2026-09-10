@@ -206,16 +206,16 @@ They help define how objects cooperate while keeping responsibilities organized.
 #### Progress
 
 - [x] Chain of Responsibility
-- [ ] Command
-- [ ] Interpreter
-- [ ] Iterator
-- [ ] Mediator
-- [ ] Memento
+- [x] Command
+- [x] Interpreter
+- [x] Iterator
+- [x] Mediator
+- [x] Memento
 - [x] Observer
-- [ ] State
-- [ ] Strategy
-- [ ] Template Method
-- [ ] Visitor
+- [x] State
+- [x] Strategy
+- [x] Template Method
+- [x] Visitor
 
 #### Key Concepts
 
