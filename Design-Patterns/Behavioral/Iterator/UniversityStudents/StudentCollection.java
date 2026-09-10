@@ -1,4 +1,4 @@
-package Behavioral.Interpreter.Iterator.UniversityStudents;
+package Behavioral.Iterator.UniversityStudents;
 
 import java.util.ArrayList;
 import java.util.List;

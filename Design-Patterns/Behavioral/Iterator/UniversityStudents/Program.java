@@ -1,4 +1,4 @@
-package Behavioral.Interpreter.Iterator.UniversityStudents;
+package Behavioral.Iterator.UniversityStudents;
 
 public class Program {
     public static void main(String[] args) {

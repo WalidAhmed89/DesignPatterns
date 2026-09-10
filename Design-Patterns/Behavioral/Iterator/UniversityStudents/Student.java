@@ -1,4 +1,4 @@
-package Behavioral.Interpreter.Iterator.UniversityStudents;
+package Behavioral.Iterator.UniversityStudents;
 
 public class Student {
     private int ID;

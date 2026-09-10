@@ -1,4 +1,4 @@
-package Behavioral.Interpreter.Iterator.PlayList;
+package Behavioral.Iterator.PlayList;
 
 public class PlayListIterator implements Iterator{
     private final String[] playList;
