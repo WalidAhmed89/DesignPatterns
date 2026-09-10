@@ -1,4 +1,4 @@
-package Behavioral.Interpreter.Iterator.PlayList;
+package Behavioral.Iterator.PlayList;
 
 public interface Iterator {
     boolean hasNext();

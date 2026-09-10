@@ -1,4 +1,4 @@
-package Behavioral.Interpreter.Iterator.PlayList;
+package Behavioral.Iterator.PlayList;
 
 public class Program {
     public static void main(String[] args) {
