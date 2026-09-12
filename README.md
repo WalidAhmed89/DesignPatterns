@@ -384,8 +384,8 @@ Each pattern can contain its own examples and documentation.
 |---|---:|---:|
 | Creational | 5 | 5 |
 | Structural | 7 | 7 |
-| Behavioral | 2 | 11 |
-| **Overall** | **14** | **23** |
+| Behavioral | 11 | 11 |
+| **Overall** | **23** | **23** |
 
 > Progress reflects the patterns currently implemented in the repository and will change as the project develops.
 
