@@ -6,3 +6,5 @@ Examples:
 - [Computer](./Computer/README.md)
 - [Product Builder](./ProductBuilder/README.md)
 - [Smart House](./SmartHouse/README.md)
+- [HTTP Request](./HTTPRequest/README.md)
+- [Application Configuration](./ApplicationConfiguration/README.md)
